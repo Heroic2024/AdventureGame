@@ -14,4 +14,8 @@ public class Item {
     public String getName() {
         return name;
     }
+    
+    public boolean isConsumable() {
+        return name.equalsIgnoreCase("Health Potion");
+    }
 }
