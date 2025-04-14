@@ -16,6 +16,6 @@ public class Item {
     }
     
     public boolean isConsumable() {
-        return name.equalsIgnoreCase("Health Potion");
+        return name.equalsIgnoreCase("Health Potion")||name.equalsIgnoreCase("Magic Herb");
     }
 }
