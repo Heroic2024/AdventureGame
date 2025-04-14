@@ -53,28 +53,44 @@ public class GameEngine {
     }
 
     public static void fightEnemy(Player player, Enemy enemy) {
-        System.out.println("You are fighting " + enemy.name + "!");
-        System.out.println("1. Fight\n2. Run");
+    System.out.println("You are fighting " + enemy.name + "!");
+    System.out.println("1. Fight\n2. Run\n3. Use Item");
 
-        int choice = scanner.nextInt();
-        if (choice == 1) {
-            if (random.nextBoolean()) {
-                System.out.println("You defeated the " + enemy.name + "!");
-                player.increaseScore(20);
-            } else {
-                enemy.attack(player);
-                if (player.getHealth() <= 0) {
-                    endGame(player);
-                    return;
-                }
-            }
+    int choice = scanner.nextInt();
+    scanner.nextLine(); // consume newline
+
+    if (choice == 1) {
+        if (random.nextBoolean()) {
+            System.out.println("You defeated the " + enemy.name + "!");
+            player.increaseScore(20);
         } else {
-            System.out.println("You escaped!");
-            player.increaseScore(5);
+            enemy.attack(player);
+            if (player.getHealth() <= 0) {
+                endGame(player);
+                return;
+            }
+        }
+    } else if (choice == 2) {
+        System.out.println("You escaped!");
+        player.increaseScore(5);
+    } else if (choice == 3) {
+        System.out.println("Which item would you like to use?");
+        System.out.println("Your inventory:");
+        for (Item item : player.getInventory()) {
+            System.out.println("- " + item.getName());
         }
 
-        askToContinue(player);
+        String itemName = scanner.nextLine();
+        player.useItem(itemName);
+        fightEnemy(player, enemy); // continue the fight after using item
+        return;
+    } else {
+        System.out.println("Invalid choice.");
     }
+
+    askToContinue(player);
+}
+
 
     public static void endGame(Player player) {
         System.out.println("\n=== Game Over ===");
